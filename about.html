@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>LaBuong</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container navbar-surface header-bar">
+      <a href="index.html" class="logo">
+        <img src="image/logoNew.jpg" alt="CocoLeaf logo" />
+      </a>
+      <nav class="primary-nav">
+        <ul class="navbar-nav">
+          <li><a class="nav-link" href="index.html">Trang chủ</a></li>
+          <li><a class="nav-link nav-pill active" href="about.html">Về LaBuong</a></li>
+          <li><a class="nav-link" href="product.html">Sản phẩm</a></li>
+          <li><a class="nav-link" href="post.html">Blog</a></li>
+          <li><a class="nav-link" href="contact.html">Liên hệ</a></li>
+        </ul>
+      </nav>
+      <a href="order.html" class="btn btn-brown nav-pill">ĐẶT HÀNG</a>
+    </div>
+  </header>
+
+  <!-- Nội dung chính -->
+  <main class="container my-5">
+    <div class="row align-items-center">
+      <div class="col-md-5">
+        <img src="image/SP4.jpg" class="img-fluid" alt="Coconut Leaf Cup">
+      </div>
+      <div class="col-md-7">
+        <h2>GIỚI THIỆU VỀ CHÚNG TÔI</h2>
+        <p><strong>LaBuong – 100% Thủ Công</strong></p>
+        <p>Mỗi sản phẩm được đan từ lá buông khô – chất liệu bền bỉ, mộc mạc và thân thiện với môi trường. Chúng tôi tin rằng, những điều giản dị nhất từ thiên nhiên có thể tạo nên vẻ đẹp tinh tế, bền vững và đầy cảm hứng cho cuộc sống hiện đại.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer sẽ load ở đây -->
+  <div id="footer"></div>
+
+<script>
+  async function loadComponent(id, file) {
+    try {
+      const res = await fetch(file);
+      if (!res.ok) throw new Error("Không load được " + file);
+      document.getElementById(id).innerHTML = await res.text();
+
+      // 👉 Nếu vừa load header thì chạy highlight menu
+      if (id === "header") {
+        highlightMenu();
+      }
+    } catch (err) {
+      console.warn("Component load failed:", file, err);
+      document.getElementById(id).innerHTML = "";
+    }
+  }
+
+  function highlightMenu() {
+    const currentPath = window.location.pathname.split("/").pop() || "index.html";
+    document.querySelectorAll(".navbar-nav .nav-link").forEach(link => {
+      const linkPath = link.getAttribute("href").split("/").pop();
+      if (linkPath === currentPath) {
+        link.classList.add("active");
+      }
+    });
+  }
+
+  loadComponent("footer", "footer.html");
+</script>
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>(function(){const currentPath=window.location.pathname.split('/').pop()||'index.html';const nav=document.querySelector('.navbar-nav');const indicator=nav?.querySelector('.nav-indicator');const items=nav?.querySelectorAll('.nav-link.nav-pill');let activeEl=null;items?.forEach(link=>{const linkPath=link.getAttribute('href').split('/').pop();if(linkPath===currentPath){link.classList.add('active');activeEl=link;}link.addEventListener('mouseenter',()=>moveIndicator(link));link.addEventListener('focus',()=>moveIndicator(link));});nav?.addEventListener('mouseleave',()=>{if(activeEl)moveIndicator(activeEl);});function moveIndicator(el){if(!indicator)return;indicator.style.display='block';const rect=el.getBoundingClientRect();const parentRect=nav.getBoundingClientRect();const x=rect.left-parentRect.left;const w=rect.width;indicator.style.transform=`translate(${x}px, -50%)`;indicator.style.width=`${w}px`;}if(activeEl)moveIndicator(activeEl);})();</script>
+</body>
+</html>
